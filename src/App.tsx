@@ -46,8 +46,8 @@ export default function App() {
 
       const matches: ComparisonMatch[] = [];
       const mismatches: ComparisonMismatch[] = [];
-      const missingInB: (string | number)[] = [];
-      const missingInA: (string | number)[] = [];
+      const missingInB: ComparisonResults['missingInB'] = [];
+      const missingInA: ComparisonResults['missingInA'] = [];
 
       mapA.forEach((valA, id) => {
         if (mapB.has(id)) {
@@ -63,13 +63,13 @@ export default function App() {
             });
           }
         } else {
-          missingInB.push(id);
+          missingInB.push({ id, value: Number(valA) });
         }
       });
 
-      mapB.forEach((_, id) => {
+      mapB.forEach((valB, id) => {
         if (!mapA.has(id)) {
-          missingInA.push(id);
+          missingInA.push({ id, value: Number(valB) });
         }
       });
 

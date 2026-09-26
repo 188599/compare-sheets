@@ -165,14 +165,16 @@ export default function ComparisonDashboard({
                 <TableHead>
                   <TableRow>
                     <TableHeadCell>ID</TableHeadCell>
+                    <TableHeadCell>Valor</TableHeadCell>
                     <TableHeadCell>Status</TableHeadCell>
                     <TableHeadCell>Detalhes</TableHeadCell>
                   </TableRow>
                 </TableHead>
                 <TableBody className="divide-y">
-                  {results.missingInB.map((id, idx) => (
+                  {results.missingInB.map(({ id, value }, idx) => (
                     <TableRow key={`b-${idx}`}>
                       <TableCell className="font-semibold">{id}</TableCell>
+                      <TableCell className="font-semibold">{value}</TableCell>
                       <TableCell>
                         <Badge color="failure">Faltando em Planilha B</Badge>
                       </TableCell>
@@ -181,9 +183,10 @@ export default function ComparisonDashboard({
                       </TableCell>
                     </TableRow>
                   ))}
-                  {results.missingInA.map((id, idx) => (
+                  {results.missingInA.map(({ id, value }, idx) => (
                     <TableRow key={`a-${idx}`}>
                       <TableCell className="font-semibold">{id}</TableCell>
+                      <TableCell className="font-semibold">{value}</TableCell>
                       <TableCell>
                         <Badge color="purple">Faltando em Planilha A</Badge>
                       </TableCell>

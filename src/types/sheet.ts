@@ -112,6 +112,6 @@ export interface ComparisonMismatch {
 export interface ComparisonResults {
   matches: ComparisonMatch[];
   mismatches: ComparisonMismatch[];
-  missingInB: (string | number)[];
-  missingInA: (string | number)[];
+  missingInB: { id: number | string; value: number }[];
+  missingInA: { id: number | string; value: number }[];
 }
