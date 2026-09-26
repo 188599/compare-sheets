@@ -122,14 +122,14 @@ export default function ComparisonDashboard({
               <Table hoverable>
                 <TableHead>
                   <TableRow>
-                    <TableHeadCell>ID ({sheetA.idCol})</TableHeadCell>
+                    <TableHeadCell>ID</TableHeadCell>
                     <TableHeadCell>
-                      Valor Planilha A ({sheetA.valCol})
+                      Valor Planilha A
                     </TableHeadCell>
                     <TableHeadCell>
-                      Valor Planilha B ({sheetB.valCol})
+                      Valor Planilha B
                     </TableHeadCell>
-                    <TableHeadCell>Variação</TableHeadCell>
+                    <TableHeadCell>Diferença</TableHeadCell>
                   </TableRow>
                 </TableHead>
                 <TableBody className="divide-y">
