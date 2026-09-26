@@ -123,12 +123,8 @@ export default function ComparisonDashboard({
                 <TableHead>
                   <TableRow>
                     <TableHeadCell>ID</TableHeadCell>
-                    <TableHeadCell>
-                      Valor Planilha A
-                    </TableHeadCell>
-                    <TableHeadCell>
-                      Valor Planilha B
-                    </TableHeadCell>
+                    <TableHeadCell>Valor Planilha A</TableHeadCell>
+                    <TableHeadCell>Valor Planilha B</TableHeadCell>
                     <TableHeadCell>Diferença</TableHeadCell>
                   </TableRow>
                 </TableHead>
@@ -140,14 +136,14 @@ export default function ComparisonDashboard({
                     >
                       <TableCell className="font-semibold">{item.id}</TableCell>
                       <TableCell className="text-red-600 dark:text-red-400">
-                        {item.valA}
+                        {Number(item.valA).toFixed(2)}
                       </TableCell>
                       <TableCell className="text-green-600 dark:text-green-400">
-                        {item.valB}
+                        {Number(item.valB).toFixed(2)}
                       </TableCell>
                       <TableCell>
                         <Badge color="warning" size="sm">
-                          {item.variance}
+                          {item.variance.toFixed(2)}
                         </Badge>
                       </TableCell>
                     </TableRow>
@@ -174,7 +170,9 @@ export default function ComparisonDashboard({
                   {results.missingInB.map(({ id, value }, idx) => (
                     <TableRow key={`b-${idx}`}>
                       <TableCell className="font-semibold">{id}</TableCell>
-                      <TableCell className="font-semibold">{value}</TableCell>
+                      <TableCell className="font-semibold">
+                        {value.toFixed(2)}
+                      </TableCell>
                       <TableCell>
                         <Badge color="failure">Faltando em Planilha B</Badge>
                       </TableCell>
@@ -186,7 +184,9 @@ export default function ComparisonDashboard({
                   {results.missingInA.map(({ id, value }, idx) => (
                     <TableRow key={`a-${idx}`}>
                       <TableCell className="font-semibold">{id}</TableCell>
-                      <TableCell className="font-semibold">{value}</TableCell>
+                      <TableCell className="font-semibold">
+                        {value.toFixed(2)}
+                      </TableCell>
                       <TableCell>
                         <Badge color="purple">Faltando em Planilha A</Badge>
                       </TableCell>
@@ -214,7 +214,7 @@ export default function ComparisonDashboard({
                   {results.matches.map((item, idx) => (
                     <TableRow key={idx}>
                       <TableCell className="font-semibold">{item.id}</TableCell>
-                      <TableCell>{item.value}</TableCell>
+                      <TableCell>{Number(item.value).toFixed(2)}</TableCell>
                       <TableCell>
                         <Badge color="success">Identico</Badge>
                       </TableCell>

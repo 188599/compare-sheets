@@ -228,7 +228,9 @@ export default function SheetConfigPreview({
                             : 'text-gray-900 dark:text-white'
                           }`}
                         >
-                          {row[col]}
+                          {
+                          isVal ? Number(row[col]).toFixed(2) : row[col]
+                          }
                         </TableCell>
                       );
                     })}
