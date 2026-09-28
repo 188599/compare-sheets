@@ -116,7 +116,7 @@ export default function ComparisonDashboard({
         >
           <TabItem
             active
-            title={`Valores não batidos (${results.mismatches.length})`}
+            title={`Valores que não batem (${results.mismatches.length})`}
           >
             <div className="overflow-x-auto mt-2">
               <Table hoverable>
@@ -200,7 +200,7 @@ export default function ComparisonDashboard({
             </div>
           </TabItem>
 
-          <TabItem title={`Valores batidos (${results.matches.length})`}>
+          <TabItem title={`Valores que batem (${results.matches.length})`}>
             <div className="overflow-x-auto mt-2">
               <Table hoverable>
                 <TableHead>

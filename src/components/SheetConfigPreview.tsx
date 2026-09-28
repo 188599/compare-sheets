@@ -203,12 +203,17 @@ export default function SheetConfigPreview({
                       >
                         <div className="flex items-center gap-1">
                           {isId && (
-                            <KeyIcon className="w-3.5 h-3.5 text-cyan-600" />
+                            <>
+                              <KeyIcon className="w-3.5 h-3.5 text-cyan-600" />
+                              ID
+                            </>
                           )}
                           {isVal && (
-                            <CurrencyDollarIcon className="w-3.5 h-3.5 text-emerald-600" />
+                            <>
+                              <CurrencyDollarIcon className="w-3.5 h-3.5 text-emerald-600" />
+                              VALOR
+                            </>
                           )}
-                          {col}
                         </div>
                       </TableHeadCell>
                     );
@@ -235,9 +240,7 @@ export default function SheetConfigPreview({
                             : 'text-gray-900 dark:text-white'
                           }`}
                         >
-                          {
-                          isVal ? Number(row[col]).toFixed(2) : row[col]
-                          }
+                          {isVal ? Number(row[col]).toFixed(2) : row[col]}
                         </TableCell>
                       );
                     })}
