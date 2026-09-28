@@ -66,6 +66,8 @@ export default function SheetConfigPreview({
       activePresetId: found?.id,
       idCol: found?.idCol,
       valCol: found?.valCol,
+      rows: [],
+      columns: []
     };
 
     if (sheetAsJson != null && found) {
@@ -102,6 +104,11 @@ export default function SheetConfigPreview({
   };
 
   const activePreset = presets.find((p) => p.id === sheet.activePresetId);
+  const showTable = !!(
+    sheet.columns != null &&
+    (sheet.rows?.length ?? 0) > 0 &&
+    sheet.activePresetId
+  );
 
   return (
     <Card className="flex flex-col justify-between h-full">
@@ -176,11 +183,11 @@ export default function SheetConfigPreview({
           </span>
         </div>
         <div className="overflow-x-auto max-h-48 border rounded-lg dark:border-gray-700">
-          {sheet.columns != null && sheet.activePresetId && (
+          {showTable && (
             <Table hoverable>
               <TableHead>
                 <TableRow>
-                  {sheet.columns.map((col) => {
+                  {sheet.columns!.map((col) => {
                     const isId = col === sheet.idCol;
                     const isVal = col === sheet.valCol;
                     return (

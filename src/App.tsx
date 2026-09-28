@@ -79,6 +79,9 @@ export default function App() {
     }, 800);
   };
 
+  const canCompare =
+    (sheetA.rows?.length ?? 0) > 0 && (sheetB.rows?.length ?? 0) > 0;
+
   return (
     <div className="dark bg-gray-900 min-h-screen text-white">
       <Navbar />
@@ -119,7 +122,7 @@ export default function App() {
                 }
                 onRunComparison={handleRunComparison}
                 isProcessing={isProcessing}
-                canCompare={true}
+                canCompare={canCompare}
               />
             </div>
           </div>
