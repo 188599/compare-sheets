@@ -32,7 +32,7 @@ interface SheetConfigPreviewProps {
   sheetTitle: string;
   onFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   presets: SheetPreset[];
-  // onAddPreset: (newPreset: SheetPreset) => void;
+  onAddPreset: (newPreset: SheetPreset) => void;
   onRunComparison?: () => void;
   isProcessing?: boolean;
   canCompare?: boolean;

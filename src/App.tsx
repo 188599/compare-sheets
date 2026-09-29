@@ -115,9 +115,9 @@ export default function App() {
                 sheetTitle="Planilha A (Origem)"
                 onFileChange={(e) => handleFileUpload(e, 'A')}
                 presets={presets}
-                // onAddPreset={(newPreset) =>
-                //   setPresets((prev) => [...prev, newPreset])
-                // }
+                onAddPreset={(newPreset) =>
+                  setPresets((prev) => [...prev, newPreset])
+                }
               />
               <SheetConfigPreview
                 sheet={sheetB}
@@ -125,9 +125,9 @@ export default function App() {
                 sheetTitle="Planilha B (Alvo)"
                 onFileChange={(e) => handleFileUpload(e, 'B')}
                 presets={presets}
-                // onAddPreset={(newPreset) =>
-                //   setPresets((prev) => [...prev, newPreset])
-                // }
+                onAddPreset={(newPreset) =>
+                  setPresets((prev) => [...prev, newPreset])
+                }
                 onRunComparison={handleRunComparison}
                 isProcessing={isProcessing}
                 canCompare={canCompare}
