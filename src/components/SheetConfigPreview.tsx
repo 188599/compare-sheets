@@ -25,7 +25,6 @@ import {
   useState,
 } from 'react';
 import { SheetData, type SheetPreset } from '../types/sheet';
-import PresetModal from './PresetModal';
 
 interface SheetConfigPreviewProps {
   sheet: SheetData;
@@ -33,7 +32,7 @@ interface SheetConfigPreviewProps {
   sheetTitle: string;
   onFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   presets: SheetPreset[];
-  onAddPreset: (newPreset: SheetPreset) => void;
+  // onAddPreset: (newPreset: SheetPreset) => void;
   onRunComparison?: () => void;
   isProcessing?: boolean;
   canCompare?: boolean;
@@ -45,18 +44,18 @@ export default function SheetConfigPreview({
   sheetTitle,
   onFileChange,
   presets,
-  onAddPreset,
+  // onAddPreset,
   onRunComparison,
   isProcessing = false,
   canCompare = false,
 }: SheetConfigPreviewProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [sheetAsJson, setSheetAsJson] = useState<string[][]>();
 
   const handlePresetChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     if (val === 'ADD_NEW') {
-      setIsModalOpen(true);
+      // setIsModalOpen(true);
       return;
     }
     const found = presets.find((p) => p.id === val);
@@ -273,13 +272,13 @@ export default function SheetConfigPreview({
       : /* Empty spacer for Sheet A to keep heights balanced if desired */
         <div className="mt-4 pt-3 border-t border-transparent h-13.25" />
       }
-
+      {/* 
       <PresetModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSavePreset={onAddPreset}
         sheet={sheet}
-      />
+      /> */}
     </Card>
   );
 }
