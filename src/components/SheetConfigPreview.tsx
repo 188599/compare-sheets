@@ -67,7 +67,7 @@ export default function SheetConfigPreview({
       idCol: found?.idCol,
       valCol: found?.valCol,
       rows: [],
-      columns: []
+      columns: [],
     };
 
     if (sheetAsJson != null && found) {
@@ -202,18 +202,17 @@ export default function SheetConfigPreview({
                         }`}
                       >
                         <div className="flex items-center gap-1">
-                          {isId && (
+                          {isId ?
                             <>
                               <KeyIcon className="w-3.5 h-3.5 text-cyan-600" />
                               ID
                             </>
-                          )}
-                          {isVal && (
+                          : isVal ?
                             <>
                               <CurrencyDollarIcon className="w-3.5 h-3.5 text-emerald-600" />
                               VALOR
                             </>
-                          )}
+                          : 'CÓDIGO'}
                         </div>
                       </TableHeadCell>
                     );

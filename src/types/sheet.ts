@@ -11,10 +11,12 @@ export interface SheetPreset {
   startingLine: number;
   idCol: string;
   idRegex?: string;
+  codeColOrRegex: string | RegExp;
   valCol: string;
   valMatcherCol?: string;
   valMatcherRegex?: string;
   ignoreZero?: boolean;
+  isCredit: boolean;
 }
 
 export interface SheetData {
@@ -82,36 +84,51 @@ export class SheetData {
       if (
         currentId != null &&
         currentId != '' &&
-        (!sheetConfig.ignoreZero || currentValue > 0)
+        (!sheetConfig.ignoreZero || (currentValue != null && currentValue != 0))
       ) {
+        let currentCode: number;
+        currentCode = Number(
+          typeof sheetConfig.codeColOrRegex == 'string' ?
+            row[SheetData.interpretColumn(sheetConfig.codeColOrRegex)]
+          : sheetConfig.codeColOrRegex.exec(row[idCol])![0],
+        );
+
+        debugger;
+
         rows.push({
+          COD: currentCode,
           [sheetConfig.idCol]: currentId,
-          [sheetConfig.valCol]: currentValue,
+          [sheetConfig.valCol]:
+            !sheetConfig.isCredit ? currentValue : -currentValue,
         });
       }
 
       index = currentValueRow + 1;
     }
 
-    return { rows, columns: [sheetConfig.idCol, sheetConfig.valCol] };
+    return { rows, columns: ['COD', sheetConfig.idCol, sheetConfig.valCol] };
   }
 }
 
 export interface ComparisonMatch {
-  id: string | number;
-  value: string | number;
+  id: string;
+  value: number;
+  codeA: number;
+  codeB: number;
 }
 
 export interface ComparisonMismatch {
-  id: string | number;
-  valA: string | number;
-  valB: string | number;
+  id: string;
+  valA: number;
+  codeA: number;
+  valB: number;
+  codeB: number;
   variance: number;
 }
 
 export interface ComparisonResults {
   matches: ComparisonMatch[];
   mismatches: ComparisonMismatch[];
-  missingInB: { id: number | string; value: number }[];
-  missingInA: { id: number | string; value: number }[];
+  missingInB: { id: string; value: number; code: number }[];
+  missingInA: { id: string; value: number; code: number }[];
 }

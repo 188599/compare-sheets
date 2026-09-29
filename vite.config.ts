@@ -12,5 +12,5 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     flowbiteReact(),
   ],
-  base: 'compare-sheets',
+  base: '/compare-sheets',
 });

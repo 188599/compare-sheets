@@ -38,10 +38,16 @@ export default function App() {
     setIsProcessing(true);
     setTimeout(() => {
       const mapA = new Map(
-        sheetA.rows!.map((r) => [r[sheetA.idCol!], r[sheetA.valCol!]]),
+        sheetA.rows!.map((r) => [
+          r[sheetA.idCol!] as string,
+          { code: r['COD'] as number, value: r[sheetA.valCol!] as number },
+        ]),
       );
       const mapB = new Map(
-        sheetB.rows!.map((r) => [r[sheetB.idCol!], r[sheetB.valCol!]]),
+        sheetB.rows!.map((r) => [
+          r[sheetB.idCol!] as string,
+          { code: r['COD'] as number, value: r[sheetB.valCol!] as number },
+        ]),
       );
 
       const matches: ComparisonMatch[] = [];
@@ -49,27 +55,29 @@ export default function App() {
       const missingInB: ComparisonResults['missingInB'] = [];
       const missingInA: ComparisonResults['missingInA'] = [];
 
-      mapA.forEach((valA, id) => {
+      mapA.forEach(({ value: valA, code: codeA }, id) => {
         if (mapB.has(id)) {
-          const valB = mapB.get(id);
+          const { value: valB, code: codeB } = mapB.get(id)!;
           if (valA === valB) {
-            matches.push({ id, value: valA });
+            matches.push({ id: id, value: valA, codeA, codeB });
           } else {
             mismatches.push({
               id,
               valA,
-              valB: valB!,
-              variance: Number(valB) - Number(valA),
+              codeA,
+              valB,
+              codeB,
+              variance: valB - valA,
             });
           }
         } else {
-          missingInB.push({ id, value: Number(valA) });
+          missingInB.push({ id, value: valA, code: codeA });
         }
       });
 
-      mapB.forEach((valB, id) => {
+      mapB.forEach(({ code, value }, id) => {
         if (!mapA.has(id)) {
-          missingInA.push({ id, value: Number(valB) });
+          missingInA.push({ id, value, code });
         }
       });
 
