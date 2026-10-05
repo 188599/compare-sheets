@@ -6,7 +6,7 @@ const config: Config = {
 
   // Tell Jest to handle .ts and .tsx files using ts-jest
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }],
   },
 
   // Setup file to run before each test file (used for custom matchers)

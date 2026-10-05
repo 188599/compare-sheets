@@ -24,7 +24,7 @@ import {
   type SetStateAction,
   useState,
 } from 'react';
-import { SheetData, type SheetPreset } from '../types/sheet';
+import type { SheetData, SheetPreset } from '../types/sheet';
 
 interface SheetConfigPreviewProps {
   sheet: SheetData;
@@ -32,7 +32,6 @@ interface SheetConfigPreviewProps {
   sheetTitle: string;
   onFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   presets: SheetPreset[];
-  onAddPreset: (newPreset: SheetPreset) => void;
   onRunComparison?: () => void;
   isProcessing?: boolean;
   canCompare?: boolean;
@@ -44,33 +43,26 @@ export default function SheetConfigPreview({
   sheetTitle,
   onFileChange,
   presets,
-  // onAddPreset,
   onRunComparison,
   isProcessing = false,
   canCompare = false,
 }: SheetConfigPreviewProps) {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [sheetAsJson, setSheetAsJson] = useState<string[][]>();
 
   const handlePresetChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
-    if (val === 'ADD_NEW') {
-      // setIsModalOpen(true);
-      return;
-    }
+
     const found = presets.find((p) => p.id === val);
 
     const newSheetValue: SheetData = {
       ...sheet,
       activePresetId: found?.id,
-      idCol: found?.idCol,
-      valCol: found?.valCol,
       rows: [],
       columns: [],
     };
 
     if (sheetAsJson != null && found) {
-      const { rows, columns } = SheetData.interpretSheet(sheetAsJson!, found);
+      const { rows, columns } = found.sheetBuilder(sheetAsJson!).data;
 
       newSheetValue.columns = columns;
       newSheetValue.rows = rows;
@@ -139,15 +131,6 @@ export default function SheetConfigPreview({
 
       {/* Preset Selector */}
       <div className="mt-3">
-        {/* <div className="flex justify-between items-center mb-1">
-          <Label htmlFor={`${sheetTitle}-preset`} />
-          <span
-            className="text-xs text-cyan-600 dark:text-cyan-400 cursor-pointer font-medium"
-            onClick={() => setIsModalOpen(true)}
-          >
-            + Novo Preset
-          </span>
-        </div> */}
         <Select
           id={`${sheetTitle}-preset`}
           value={sheet.activePresetId}
@@ -160,9 +143,6 @@ export default function SheetConfigPreview({
               {p.name}
             </option>
           ))}
-          {/* <option value="ADD_NEW" className="font-bold text-cyan-600">
-            + Adicionar Novo Preset...
-          </option> */}
         </Select>
         {activePreset && (
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 italic">
@@ -186,9 +166,9 @@ export default function SheetConfigPreview({
             <Table hoverable>
               <TableHead>
                 <TableRow>
-                  {sheet.columns!.map((col) => {
-                    const isId = col === sheet.idCol;
-                    const isVal = col === sheet.valCol;
+                  {sheet.columns!.map((col, idx) => {
+                    const isId = idx == 1;
+                    const isVal = idx == 2;
                     return (
                       <TableHeadCell
                         key={col}
@@ -224,9 +204,9 @@ export default function SheetConfigPreview({
                     key={idx}
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
-                    {sheet.columns!.map((col) => {
-                      const isId = col === sheet.idCol;
-                      const isVal = col === sheet.valCol;
+                    {sheet.columns!.map((col, colIdx) => {
+                      const isId = colIdx == 1;
+                      const isVal = colIdx == 2;
                       return (
                         <TableCell
                           key={col}
@@ -272,13 +252,6 @@ export default function SheetConfigPreview({
       : /* Empty spacer for Sheet A to keep heights balanced if desired */
         <div className="mt-4 pt-3 border-t border-transparent h-13.25" />
       }
-      {/* 
-      <PresetModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSavePreset={onAddPreset}
-        sheet={sheet}
-      /> */}
     </Card>
   );
 }

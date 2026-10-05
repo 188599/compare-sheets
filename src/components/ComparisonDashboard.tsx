@@ -42,13 +42,6 @@ export default function ComparisonDashboard({
         <Button color="gray" size="sm" onClick={onReset}>
           <ArrowLeftIcon className="mr-2 h-4 w-4" /> Voltar para Configuração
         </Button>
-        {/* <Button
-          color="success"
-          size="sm"
-          onClick={() => alert('Report downloaded successfully!')}
-        >
-          <ArrowDownTrayIcon className="mr-2 h-4 w-4" /> Export Report (.xlsx)
-        </Button> */}
       </div>
 
       {/* KPI Summary Cards */}

@@ -3,16 +3,17 @@ import ComparisonDashboard from './components/ComparisonDashboard';
 import Navbar from './components/Navbar';
 import SheetConfigPreview from './components/SheetConfigPreview';
 import { initialPresets } from './data/data';
-import type {
-  ComparisonMatch,
-  ComparisonMismatch,
-  ComparisonResults,
-  SheetData,
+import {
+  COLUMN_LABELS,
+  type ComparisonMatch,
+  type ComparisonMismatch,
+  type ComparisonResults,
+  type SheetData,
 } from './types/sheet';
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState<number>(1); // 1: Config & Preview, 2: Comparison Results
-  const [presets, setPresets] = useState(initialPresets);
+  const [presets] = useState(initialPresets);
   const [sheetA, setSheetA] = useState<SheetData>({});
   const [sheetB, setSheetB] = useState<SheetData>({});
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -39,14 +40,20 @@ export default function App() {
     setTimeout(() => {
       const mapA = new Map(
         sheetA.rows!.map((r) => [
-          r[sheetA.idCol!] as string,
-          { code: r['COD'] as number, value: r[sheetA.valCol!] as number },
+          r[COLUMN_LABELS.ID] as string,
+          {
+            code: r[COLUMN_LABELS.CODE] as number,
+            value: r[COLUMN_LABELS.VALUE] as number,
+          },
         ]),
       );
       const mapB = new Map(
         sheetB.rows!.map((r) => [
-          r[sheetB.idCol!] as string,
-          { code: r['COD'] as number, value: r[sheetB.valCol!] as number },
+          r[COLUMN_LABELS.ID] as string,
+          {
+            code: r[COLUMN_LABELS.CODE] as number,
+            value: r[COLUMN_LABELS.VALUE] as number,
+          },
         ]),
       );
 
@@ -115,9 +122,6 @@ export default function App() {
                 sheetTitle="Planilha A (Origem)"
                 onFileChange={(e) => handleFileUpload(e, 'A')}
                 presets={presets}
-                onAddPreset={(newPreset) =>
-                  setPresets((prev) => [...prev, newPreset])
-                }
               />
               <SheetConfigPreview
                 sheet={sheetB}
@@ -125,9 +129,6 @@ export default function App() {
                 sheetTitle="Planilha B (Alvo)"
                 onFileChange={(e) => handleFileUpload(e, 'B')}
                 presets={presets}
-                onAddPreset={(newPreset) =>
-                  setPresets((prev) => [...prev, newPreset])
-                }
                 onRunComparison={handleRunComparison}
                 isProcessing={isProcessing}
                 canCompare={canCompare}
